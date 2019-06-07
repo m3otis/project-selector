@@ -1,0 +1,54 @@
+<h1>
+  All Projects
+</h1>
+<div>
+<mat-chip-list>
+  <mat-chip *ngFor="let project of allProjectsNew">{{ project.description }}</mat-chip>
+</mat-chip-list>
+</div>
+
+<h1>
+  Filtered Projects
+</h1>
+<div>
+<mat-chip-list>
+  <mat-chip *ngFor="let project of filteredProjects | async">{{ project.description }}</mat-chip>
+</mat-chip-list>
+</div>
+
+<h1>
+    Add Project(s)
+</h1>
+<div class="project-list">
+    <mat-form-field class="project-list">
+        <mat-chip-list #chipList aria-label="Project selection">
+          
+          <mat-chip
+            *ngFor="let project of chosenProjectsNew"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="remove(project)">
+
+            <!-- (removed)="remove(project)"> -->
+
+            {{project.description}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+
+          <input
+            placeholder="Projects..."
+            #fruitInput
+            [formControl]="projectControl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              <mat-option *ngFor="let project of filteredProjects | async" [value]="project">
+                {{project.description}}
+              </mat-option>
+          </mat-autocomplete>
+      </mat-form-field>
+</div>
