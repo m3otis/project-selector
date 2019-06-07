@@ -51,8 +51,8 @@ export class ProjectSelectorComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.sortProjects();
     this.filterProjects();
+    this.sortProjects();
   }
 
   private sortProjects() {
