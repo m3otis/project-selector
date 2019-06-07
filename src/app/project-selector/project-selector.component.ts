@@ -12,7 +12,12 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 export class Project {
   constructor(public id: number, public description: string) {}
 }
-
+/*
+Used 'Chips Autocomplete' as example src:
+https://material.angular.io/components/chips/examples
+and reworked parts in order to make use of
+Project objects vs strings used in example
+*/
 @Component({
   selector: 'app-project-selector',
   templateUrl: './project-selector.component.html',
@@ -25,7 +30,6 @@ export class ProjectSelectorComponent implements OnInit {
   addOnBlur = true;
   count = 0;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  // filteredProjects: Observable<Project[] | void>;
   projectControl = new FormControl();
 
   allProjectsNew: Project[] = [
@@ -44,9 +48,7 @@ export class ProjectSelectorComponent implements OnInit {
   @ViewChild('projectInput', { static: false }) projectInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
 
-  constructor() {
-    this.filterProjects();
-  }
+  constructor() {}
 
   ngOnInit() {
     this.sortProjects();
@@ -130,16 +132,4 @@ export class ProjectSelectorComponent implements OnInit {
       return p.id !== event.option.value.id;
     });
   }
-
-  private _filter(project: Project): Project[] {
-    const filterValue = project.description.toLowerCase();
-
-    this.allProjectsNew.filter(
-      p => p.description.toLowerCase().indexOf(filterValue) === 0
-    );
-
-    return this.allProjectsNew;
-  }
-
-
 }
